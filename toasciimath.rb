@@ -5,7 +5,10 @@ require 'cgi'
 latex_list = [
   '若$f\left(x\right)=\left\{\begin{array}{c} {x^{3} +1,\quad x\le 0} \\ {2+x,\quad 0<x<2} \\ {4,\quad x\ge 2} \end{array}\right.$，則 $f\left(f\left(0\right)\right)+f\left(f\left(3\right)\right)$=?',
   '$f\\left(g\\left(x\\right)\\right)=\\left\\{\\begin{array}{c} {0;\\quad -1<x} \\\\ {1;\\quad -5\\le x\\le -1} \\\\ {3;\\quad x<-5} \\end{array}\\right.$',
-  '利用絕對值特性，得$f\left(x\right)= \frac{1}{2}(x+\left| x \right|)=\left\{\begin{array}{c} {x;\quad x\geqslant 0} \\ {0;\quad x<0} \end{array}\right.$ ，'
+  '利用絕對值特性，得$f\left(x\right)= \frac{1}{2}(x+\left| x \right|)=\left\{\begin{array}{c} {x;\quad x\geqslant 0} \\ {0;\quad x<0} \end{array}\right.$ ，,',
+  '$\frac{\mathit{Vcylinder}}{\mathit{Vsphere}} = \frac{3}{2}$',
+  '根號內不可為負，故$x^{2}-x^{3}=x^{2}\left(1-x\right)\ge0$，即$D_{f}= \left(-\infty ,1\right]$ 。',
+  '$\{ x|x\ne {\textstyle\frac{1}{2}} \} =(-\infty ,{\textstyle\frac{1}{2}} )\bigcup ({\textstyle\frac{1}{2}} ,\infty )$. $\{ x|x\ne {\textstyle\frac{1}{2}} \} =(-\infty ,{\textstyle\frac{1}{2}} )\bigcup ({\textstyle\frac{1}{2}} ,\infty )$'
 ]
 
 latex_list.each do |latex|
@@ -20,7 +23,7 @@ latex_list.each do |latex|
   asciimath = CGI.unescapeHTML(asciimath)
   asciimath = asciimath.gsub(/&#x([\da-fA-F]+);/) { [$1.hex].pack("U") }
 
-  # 換行符號處理(也太鬼畫符了吧)
+  # 換行符號處理
   asciimath.gsub!(/:\[(.*?)\]:/m) do
     body = $1.gsub(/"\s*"/, '],[')
     ":[" + body + "]:"
