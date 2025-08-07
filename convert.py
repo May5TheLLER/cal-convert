@@ -1,8 +1,11 @@
 import pandas as pd
 import ast
+import csv
+
 
 # === 1. 讀取 Excel 題庫 ===
 excel_path = "1 - 1 Functions 函數.xlsx"  
+
 df = pd.read_excel(excel_path)
 
 # === 2. 建立轉換後資料表 ===
@@ -24,7 +27,7 @@ converted["Unnamed: 2"] = ["題型:\n(1)是非\n(2)單選\n(3)複選\n(4)填充\
 # === 5. 包裝 AsciiMath 題幹 ===
 def wrap_asciimath(text):
     content = str(text).replace("`", "'")
-    return f'<div><span class="fs-equation">`{content}`</span></div>'
+    return content
 
 converted["Unnamed: 3"] = ["題目", ""] + [wrap_asciimath(q) for q in df["題目"]]
 
@@ -77,5 +80,10 @@ for i in range(max_choices):
 converted["Unnamed: 27"] = ["分數 (僅支援自訂配分)", "0"] + [0] * len(df)
 
 # === 11. 匯出為 CSV（iLearning 可用）===
-converted.to_csv("converted_ilearning.csv", index=False, encoding="utf-8-sig")
+converted.to_csv(
+    "converted_ilearning.csv",
+    index=False,
+    encoding="utf-8-sig",
+    quoting=csv.QUOTE_ALL  
+)
 print(" 題庫已成功轉換並匯出為 converted_ilearning.csv")
