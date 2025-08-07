@@ -80,10 +80,5 @@ for i in range(max_choices):
 converted["Unnamed: 27"] = ["分數 (僅支援自訂配分)", "0"] + [0] * len(df)
 
 # === 11. 匯出為 CSV（iLearning 可用）===
-converted.to_csv(
-    "converted_ilearning.csv",
-    index=False,
-    encoding="utf-8-sig",
-    quoting=csv.QUOTE_ALL  
-)
+converted.to_csv("converted_ilearning.csv", index=False, encoding="utf-8-sig")
 print(" 題庫已成功轉換並匯出為 converted_ilearning.csv")
