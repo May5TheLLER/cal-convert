@@ -7,8 +7,9 @@ require 'plurimath'
 require 'cgi'
 
 # 1. 輸入／輸出檔名
-INPUT_CSV  = 'converted_puretext_ilearning.csv'
-OUTPUT_CSV = 'ilearning_ascii_wrapped_utf8_bom.csv'
+
+INPUT_CSV  = 'converted_ilearning.csv'
+OUTPUT_CSV = 'ilearning_ascii.csv'
 
 # 2. 把一段 LaTeX 轉成純 AsciiMath
 def latex2ascii(latex)
@@ -39,6 +40,7 @@ def latex2ascii(latex)
     ascii.gsub!(/"P{geqslant}"/,'>=')
     ascii.gsub!(/"P{duni}"/,'bigcup')
     ascii.gsub!(/"P{mid}"/,'|')
+    ascii.gsub!(/𝜔/,'omega')
     ascii.gsub!(/, ; ;/,'|')
     ascii.gsub!(/\$/,"")
 
@@ -49,7 +51,7 @@ def latex2ascii(latex)
   end
 end
 
-# 3. 包上 <div><span>…</span></div>
+# 3. 包上 ` `
 def wrap_fs(eq)
   return '' if eq.nil? || eq.empty?
   %Q{`#{eq}`}
