@@ -2,7 +2,7 @@ import pandas as pd
 import ast
 
 # === 1. 讀取 Excel 題庫 ===
-excel_path = "1 - 1 Functions 函數.xlsx"  # ← 檔案路徑請依實際檔案名稱設定
+excel_path = "1 - 1 Functions 函數.xlsx"  
 df = pd.read_excel(excel_path)
 
 # === 2. 建立轉換後資料表 ===
