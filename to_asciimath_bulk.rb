@@ -8,8 +8,10 @@ require 'cgi'
 
 # 1. 輸入／輸出檔名
 
-INPUT_CSV  = 'converted_ilearning.csv'
-OUTPUT_CSV = 'ilearning_ascii.csv'
+target = File.read("current_target.txt").strip
+INPUT_CSV = target
+
+OUTPUT_CSV = 'ascii_' + target
 
 # 2. 把一段 LaTeX 轉成純 AsciiMath
 def latex2ascii(latex)
@@ -42,12 +44,12 @@ def latex2ascii(latex)
     ascii.gsub!(/"P{mid}"/,'|')
     ascii.gsub!(/𝜔/,'omega')
     ascii.gsub!(/, ; ;/,'|')
-    ascii.gsub!(/\$/,"")
+
 
     ascii.strip
   rescue => e
 
-    ""
+    "Failed to parse"
   end
 end
 

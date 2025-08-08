@@ -3,10 +3,14 @@ import ast
 import csv
 
 
-# === 1. 讀取 Excel 題庫 ===
-excel_path = "1 - 1 Functions 函數.xlsx"  
 
-df = pd.read_excel(excel_path)
+# === 1. 讀取 Excel 題庫 ===
+excel_path_list = ["1 - 1 Functions 函數.xlsx",
+                   "1 - 2 The Definition of a Limit & the Limit Laws 極限定義及定理.xlsx"]
+
+target = excel_path_list[1]
+
+df = pd.read_excel(target)
 
 # === 2. 建立轉換後資料表 ===
 n_rows = len(df) + 2
@@ -80,5 +84,28 @@ for i in range(max_choices):
 converted["Unnamed: 27"] = ["分數 (僅支援自訂配分)", "0"] + [0] * len(df)
 
 # === 11. 匯出為 CSV（iLearning 可用）===
-converted.to_csv("converted_ilearning.csv", index=False, encoding="utf-8-sig")
-print(" 題庫已成功轉換並匯出為 converted_ilearning.csv")
+
+converted.to_csv("ilearning_" + target.replace(".xlsx", ".csv") , index=False, encoding="utf-8-sig", lineterminator="\n")
+
+'''
+# 先清理資料：移除前後空白並 escape 雙引號
+def clean_cell(val):
+    if isinstance(val, str):
+        return val.strip().replace('"', '""')
+    return val
+
+converted = converted.applymap(clean_cell)
+
+# 匯出時強制所有欄位加引號
+converted.to_csv(
+    "converted_ilearning.csv",
+    index=False,
+    encoding="utf-8-sig",
+    quoting=csv.QUOTE_ALL,
+    lineterminator="\n"
+)
+'''
+with open("current_target.txt", "w", encoding="utf-8") as f:
+    f.write("ilearning_" + target.replace(".xlsx", ".csv"))
+
+print(" 題庫已成功轉換並匯出為 " + "ilearning_" + target.replace(".xlsx", ".csv"))
