@@ -15,12 +15,21 @@ OUTPUT_CSV = 'ascii_' + target
 
 # 2. 把一段 LaTeX 轉成純 AsciiMath
 def latex2ascii(latex)
+
   return '' if latex.nil? || latex.empty?
   begin
     # 刪掉純排版的 \left / \right
     # s = latex.gsub(/\\left|\\right/, '')
 
     # 解析並輸出 AsciiMath
+
+    #使極限符號能正確顯示
+    latex.gsub!(/\\mathop\{\\lim\s*\}/, '')
+    latex.gsub!(/\\limits(\s*_\{[^}]+\})/, '\\lim\1')
+    
+    # 調整不支援的符號
+    latex.gsub!(/\\textit/, '')
+
     ast   = Plurimath::Math.parse(latex, :latex)
     ascii = ast.to_asciimath
 
@@ -38,18 +47,27 @@ def latex2ascii(latex)
      ":[" + body + "]:"
     end
 
-    # 調整無法支援的符號
-    ascii.gsub!(/"P{geqslant}"/,'>=')
-    ascii.gsub!(/"P{duni}"/,'bigcup')
-    ascii.gsub!(/"P{mid}"/,'|')
-    ascii.gsub!(/𝜔/,'omega')
-    ascii.gsub!(/, ; ;/,'|')
+    # 調整不支援的符號
+    replacements = {
+      /"P{geqslant}"/      => '>=',
+      /"P{duni}"/          => 'bigcup',
+      /"P{mid}"/           => '|',
+      /"P{smblkcircle}"/   => 'cdot',
+      /"P{Re}"/            => 'R',
+      /"P{underline}"/     => '_',
+      /𝜔/                  => 'omega',
+      /, ; ;/              => '|',
+      /rm\(([^)]*)\)/      => '\1'
+    }
+    replacements.each { |pattern, replacement| ascii.gsub!(pattern, replacement) }
+    
 
 
     ascii.strip
   rescue => e
 
     "Failed to parse"
+
   end
 end
 
