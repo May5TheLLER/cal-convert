@@ -1,0 +1,73 @@
+version: 4,Unnamed: 1,Unnamed: 2,Unnamed: 3,Unnamed: 4,Unnamed: 5,Unnamed: 6,Unnamed: 7,Unnamed: 8,Unnamed: 9,Unnamed: 10,Unnamed: 11,Unnamed: 12,Unnamed: 13,Unnamed: 14,Unnamed: 15,Unnamed: 16,Unnamed: 17,Unnamed: 18,Unnamed: 19,Unnamed: 20,Unnamed: 21,Unnamed: 22,Unnamed: 23,Unnamed: 24,Unnamed: 25,Unnamed: 26,Unnamed: 27
+題組,類別,"題型:
+(1)是非
+(2)單選
+(3)複選
+(4)填充
+(5)問答
+(6)說明",題目,"答案
+若為是非題:
+(1)答案為是
+(2)答案為否","解說
+(說明沒有解說)","難易度:
+(1)容易
+(2)適中
+(3)困難",選項1,選項2,選項3,選項4,,,,,,,,,,,,,,,,,分數 (僅支援自訂配分)
+,,2,,1,無,2,,,,,,,,,,,,,,,,,,,,,0
+,,2,`cosfrac(2 pi)(5)`,2,Let `omega = e^(i frac(2 pi)(5)) = cosfrac(2 pi)(5) + i sinfrac(2 pi)(5)` .,2,`frac(- 1 - sqrt(5))(4)`,`frac(- 1 + sqrt(5))(4)`,`frac(1 - sqrt(5))(4)`,`frac(1 + sqrt(5))(4)`,,,,,,,,,,,,,,,,,0
+,,2,"If `x lt y` and `n` is odd, what could we say about  `x^(n) lt y^(n)` ?",3,"Discuss three cases `0 le x lt y` , `x lt 0 lt y` , and `x lt y le 0` seperately.",2,`x^(n) lt y^(n)` never true,`x^(n) lt y^(n)` sometimes true and sometimes false,`x^(n) lt y^(n)` always true,,,,,,,,,,,,,,,,,,0
+,,1,"  If `x = f (t)   a n d   y = g (t)`, then we can find a function `h` such that `y = h (x)`.  ",1,​,2,,,,,,,,,,,,,,,,,,,,,0
+,,2,"若`z_(1) = 2 + 3 i ,   z_(2) = 4 - 7 i`，則`frac(| z_(1) |)(| z_(2) |)`=",1,​,2,`frac(1)(sqrt(5))`,`frac(1)(5)`,`sqrt(5)`, `5`,,,,,,,,,,,,,,,,,0
+,,2,1到100之中，為2的倍數但不為3且不為5的倍數有幾個,3,​,2,30,23,27,24,,,,,,,,,,,,,,,,,0
+,,2,"若`f ( x ) = { {:[x^(3) + 1 , quad x le 0], [2 + x , quad 0 lt x lt 2], [4 , quad x ge 2]:}`，則 `f ( f ( 0 ) ) + f ( f ( 3 ) )`=?",4,​,2,1,3,5,7,,,,,,,,,,,,,,,,,0
+,,2, 設 x 與  y 均為實數，則`| x - y | = | x | + | y |`成立的充分必要條件是：,2,​,2,`x y ge 0`,`x y le 0`,`x y gt 0`,`x y lt 0`,,,,,,,,,,,,,,,,,0
+,,2,一自然數`n`以3除之餘2，以5除之餘3，以7除之餘4，則此種`n`介於400至1000共有多少個,2,​,2,5,6,7,8,,,,,,,,,,,,,,,,,0
+,,2,`root(3)(5 + 2 sqrt(13)) + root(3)(5 - 2 sqrt(13))`=,3,​,2,10,-3,1,2/3,,,,,,,,,,,,,,,,,0
+,,2,將二次函數`y = 2 x^(2)`的圖形向右平移3單位，再向下平移一單位，則可得新圖形之函數,1,​,2,`y = 2 ( x - 3 )^(2) - 1`,`y = 2 ( x - 3 )^(2) + 1`,`y = 2 ( x + 3 )^(2) - 1`, `y = 2 ( x + 3 )^(2) + 1`,,,,,,,,,,,,,,,,,0
+,,2,Let`f ( x ) = ( 1 + frac(2)(x) ) sqrt(x + 6)`,1,​,2,"`x in [ - 6 , 0 ) bigcup ( 0 , oo )`","`x in [ - 5 , 0 ) bigcup ( 0 , oo )`","`x in [ - 4 , 0 ) bigcup ( 0 , oo )`","`x in [ - 3 , 0 ) bigcup ( 0 , oo )`",,,,,,,,,,,,,,,,,0
+,,2, Find the domain of the function.,2,​,1,`Failed to parse`.,`Failed to parse`.,`Failed to parse`.,`Failed to parse`.,,,,,,,,,,,,,,,,,0
+,,2,下列何者為`y = sqrt(frac(x)(2 - x))`函數的定義域?,4,​,2,`- 2 le x le 0`,`- 2 le x lt 2`,`2 le x`,`0 le x lt 2`,,,,,,,,,,,,,,,,,0
+,,2,Pair ( a ) ( b ) ( c ) ( d ) with ( e ) ( f ) ( g ) ( h ).,3,​,2,pair ( a ) with ( g ),pair ( a ) with ( f ),pair ( a ) with ( e ),pair ( a ) with ( h ),,,,,,,,,,,,,,,,,0
+,,2,"已知`f ( x ) = frac(1)(2) ( x + | x | )`；`g ( x ) = { {:[1 , quad 1 lt x], [2 , quad 0 le x le 1], [3 , quad x lt 0]:}` ，",3,​,2,"`f ( g ( x ) ) = { {:[0 , quad - 1 lt x], [1 , quad - 5 le x le - 1], [3 , quad x lt - 5]:}`","`f ( g ( x ) ) = { {:[4 , quad 1 lt x], [1 , quad - 1 le x le 1], [3 , quad x lt - 1]:}`","`f ( g ( x ) ) = { {:[1 , quad 1 lt x], [2 , quad 0 le x le 1], [3 , quad x lt 0]:}`","`f ( g ( x ) ) = { {:[- 1 , quad 1 lt x], [0 , quad 0 le x le 1], [1 , quad x lt 0]:}`",,,,,,,,,,,,,,,,,0
+,,2,已知`F ( x ) = x^(2) + frac(1)(x^(2))`；`g ( x ) = x + frac(1)(x)` ，,1,​,2,`f ( x ) = x^(2) - 2`,`f ( x ) = x^(4) + x^(2) + 1`,`f ( x ) = x - 1`,`f ( x ) = x^(3) - 2 x + 5`,,,,,,,,,,,,,,,,,0
+,,1,"If `y` is a function of `t` and `x` is a function of `t`, then `y` is a function of `x`.",1,​,2,,,,,,,,,,,,,,,,,,,,,0
+,,2,"The endpoint of a moveable rod of length 1 meter have coordinates (`x`, 0) and (0, y) (see figure on the left).  The position of the end on the `x`-axis is `x (t) = sinfrac(pi)(3) t` where `t` is the time in seconds.  What is the lowest point reached by the end of the rod on the y-axis?![8.jpg](/api/upload-pics/610c86cc7f8f923f855cc9e2/162916890636989445.jpg)",3,​,2,`- 0.3`,`- 0.5`,`- 1`,`- 1.2`,,,,,,,,,,,,,,,,,0
+,,2,"The endpoint of a moveable rod of length 1 meter have coordinates (`x`, 0) and (0, y) (see figure on the left).  The position of the end on the `x`-axis is `x (t) = sinfrac(pi)(3) t` where `t` is the time in seconds. Find the time of the complete cycle of the rod.![8.jpg](/api/upload-pics/610c86cc7f8f923f855cc9e2/162916884625860698.jpg)",2,​,2,`t = 3` (sec),`t = 6` (sec),`t = 4` (sec),`t = 8` (sec),,,,,,,,,,,,,,,,,0
+,,2,`f ( x ) = log_(frac(1)(3)) ( x^(2) - x + 1 ) - log_(frac(1)(3)) ( x^(2) + x + 1 )` `x in R`，求`f ( x )`之值域為何？,2,​,3, `log_(frac(1)(3)) ( frac(x^(2) + x + 1)(x^(2) - x + 1) )`, `log_(frac(1)(3)) ( frac(x^(2) - x + 1)(x^(2) + x + 1) )`, `log ( frac(x^(2) + x + 1)(x^(2) - x + 1) )`, `log ( frac(x^(2) - x + 1)(x^(2) + x + 1) )`,,,,,,,,,,,,,,,,,0
+,,2,"For the function `f` whose graph is given, what is `f ( - 1 )`? ![6.png](/api/upload-pics/610c86cc7f8f923f855cc9e2/162857541599274095.png)",2,​,2,`1`,`2`,`3`,Does not exist,,,,,,,,,,,,,,,,,0
+,,2,"已知`f ( x ) = { {:[1 , quad x gt 0], [0 , quad x le 0]:}` ，`g ( x ) = { {:[0 , quad x gt 0], [1 , quad x le 0]:}`，則`f ( g ( x ) )`為何?",2,​,2,`f ( x )`,`g ( x )`,`g ( f ( x ) )`,`f ( x - 1 )`,,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x ) = frac(x)(1 - x)` ，則`f ( f ( x ) )`為何?,2,​,2,`frac(2 x)(1 - 2 x)`,`frac(x)(1 - 2 x)`,`frac(x)(1 - x)`,`frac(x)(1 + 2 x)`,,,,,,,,,,,,,,,,,0
+,,2,已知 `f ( x ) = frac(2 x - 3)(3 x + 1)` ，求 `f ( x )` 的定義域 `D_(f)` 和 `f ( x )` 的值域 `R_(f)`,1,"Since `f ( x ) = frac(2 x - 3)(3 x + 1) = frac(2)(3) - frac(11)(3) * frac(1)(3 x + 1)` and the range of `frac(1)(3 x + 1)` is `{ y in mathbb(R) | y ne 0 }`, we have `R_(f) = { y in mathbb(R) | y ne frac(2)(3) }` .",2,`D_(f) = { x in mathbb(R) | x ne - frac(1)(3) }`,`D_(f) = { x in mathbb(R) | x ne - frac(2)(3) }`,`D_(f) = { x in mathbb(R) | x ne frac(2)(3) }`,`D_(f) = { x in mathbb(R) | x ne frac(1)(3) }`,,,,,,,,,,,,,,,,,0
+,,2,已知`y = x^(frac(1)(x - 1))` ，其定義域為何?,4,​,2," `{ x ne 1 ,   x ge 0 }`"," `{ x ne 0 ,   x gt 0 }`"," `{ x ne 0 ,   x ge 0 }`"," `{ x ne 1 ,   x gt 0 }`",,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x + 1 ) = x^(2) + 3 x + 3` ，則`f ( x )`為何?,1,​,2,`x^(2) + x + 1`,`x^(2) + 2 x + 1`,`x^(2) + x + 2`,`x^(2) + x`,,,,,,,,,,,,,,,,,0
+,,2,求`sqrt(x - 1) gt x - 3`之解集合區間為何？,4,​,2,"`(2 , 5)`","`[3 , 5)`","`[1 , 3]`","[1,5)",,,,,,,,,,,,,,,,,0
+,,2,無限循環小數`0.9999 cdots` 為,3,已知 `frac(1)(3) = 0.3333 dot(s)`，,1,`gt 1`,`lt 1`,`= 1`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,(阿基米德墓碑銘)若欲於一正圓柱體內，內接一半徑為`r`之球，試求此正圓柱體與內接球體之體積比，與表面積比。,1,`frac(ii(V c y l i n d e r))(ii(V s p h e r e)) = frac(3)(2)` ，`frac(ii(S c y l i n d e r))(ii(S s p h e r e)) = frac(3)(2)`,2,`frac(3)(2)`,`frac(3)(4)`,`frac(4)(3)`,none,,,,,,,,,,,,,,,,,0
+,,2,"已知`f ( x ) = { {:[1 , quad x gt 0], [0 , quad x le 0]:}` ，`g ( x ) = { {:[0 , quad x gt 0], [1 , quad x le 0]:}`，則`f ( g ( x ) )`為",2,"已知`u = g ( x ) = { {:[0 , quad x gt 0], [1 , quad x le 0]:}` 及 `f ( x ) = { {:[1 , quad x gt 0], [0 , quad x le 0]:}` ，",2, `f ( x )`, `g ( x )`,`1`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,"已知`f ( x ) = frac(1)(2) ( x + | x | )`；`g ( x ) = { {:[1 , quad 1 lt x], [2 , quad 0 le x le 1], [3 , quad x lt 0]:}` ，求 `f ( g ( x ) )`等於",2,"利用絕對值特性，得`f ( x ) = frac(1)(2) (x + | x |) = { {:[x , quad x >= 0], [0 , quad x lt 0]:}` ，",3,`f ( x )`,`g ( x )`,"`{ {:[x , quad 1 lt x], [- x , quad 0 le x le 1], [0 , quad x lt 0]:}`",以上皆非,,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x ) = frac(x)(1 - x)` ，則`f ( f ( x ) )`為,3,已知`f ( x ) = frac(x)(1 - x)` ，,2, `frac(1 - x)(x + 1)`,`frac(1)(1 - 2 x)`,`frac(x)(1 - 2 x)`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,For `f ( x ) = 2 x - 3` and `g ( x ) = cosx` ，find each composite function  `g ( f ( x ) ) = ?`,2, `g ( f ( x ) ) = cos( 2 x - 3 )`,1,`2 cosx - 3`,`cos( 2 x - 3 )`, `2 cos( x - 3 )` ,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,For `f ( x ) = 2 x - 3` and `g ( x ) = cosx` ，find each composite function  `f ( g ( x ) ) = ?`,2,`f ( g ( x ) ) = 2 cosx - 3`,1,`2 cosx - 3`, `cos( 2 x - 3 )`,`2 cos( x - 3 )`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x ) = sqrt(x^(2) - x^(3))` 的定義域為,1,"根號內不可為負，故`x^(2) - x^(3) = x^(2) ( 1 - x ) ge 0`，即`D_(f) = ( - oo , 1 ]` 。",2," `x in ( - oo , 1 ]`","`x in ( - oo , 0 ]`","`x in ( - oo , - 1 )`","`[ 1 , oo )`",,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x ) = frac(2 x - 3)(3 x + 1)` 的定義域,1,​,2,"`{ x in R ,     x ne - frac(1)(3) }`",`{ x in R }`," `[ - frac(1)(3) , oo )`",以上皆非,,,,,,,,,,,,,,,,,0
+,,3,Which of the following definite integrals are correct?,,​,1,`int_(0)^(pi) x sinx d x = pi`,`int_(0)^(pi // 2) x sinx d x = 1`,`int_(0)^(pi) x^(2) sinx d x = pi^(2) - 4`,`int_(0)^(pi // 2) sin^(- 1) x d x = frac(pi)(2)`,,,,,,,,,,,,,,,,,0
+,,1,`int_(- oo)^(oo) x d x = 0`對否？,1,​,2,,,,,,,,,,,,,,,,,,,,,0
+,,2,Find the volume of a circular cone of height h and base radius r.![範例圖.png](/api/upload-pics/60c1a53080b4d6e1280f49fa/162385377052681746.png),1,​,3,`frac(pi r^(2) h)(3)`,`frac(pi r^(2) h)(2)`,`frac(pi r h)(3)`,`frac(pi h)(3)`,,,,,,,,,,,,,,,,,0
+,,2,有限小數`5.125` 為,3,​,1,`frac(43)(8)`,`frac(5125)(1000)`, `frac(41)(8)` , 以上皆非,,,,,,,,,,,,,,,,,0
+,,2,"已知`f ( x ) = { {:[1 + x , quad x lt 0], [1 , quad x ge 0]:}` ，則`f ( f ( x ) )`為",1,​,3," `f ( f ( x ) ) = { {:[2 + x , quad x lt - 1], [1 , quad x ge - 1]:}`","`f ( f ( x ) ) = { {:[2 + x , quad x lt 1], [1 , quad x ge 1]:}`"," `f ( f ( x ) ) = { {:[2 - x , quad x lt - 1], [1 , quad x ge - 1]:}`", `0`,,,,,,,,,,,,,,,,,0
+,,2,.求`sqrt(x - 1) gt x - 3`之解集合為,4,​,2,"`( 2 , 5 )`"," `[ 3 , 5 )`","`[ 1 , 3 ]`","`[ 1 , 5 )`",,,,,,,,,,,,,,,,,0
+,,3,可能有函數的圖形對稱於,,`y = 0` 這個函數同時滿足所有選項的對稱性,1, `x = 0`,`y = 0` ,原點,  `x = 1`,,,,,,,,,,,,,,,,,0
+,,2," 已知`| x + 2 | + | x - 2 | le 12`，`x in R`，此不等式可簡化為`a le x le b`，其中`a , b , in R`，則",3,​,2,`a = - 4`，`b = - 4`,`a = 4`，`b = 8`,`a = - 6`，`b = 6` , `a = 6`，`b = 8`,,,,,,,,,,,,,,,,,0
+,,2,"下列函數的圖形，何者對稱於原點 `( 0 , 0 )` ？",1,​,1,`y = 2 x^(3) - x` ,`x^(2) - y = 3`,`y^(2) = x^(3) - 4 x`, `x^(2) y - x^(2) + 4 y = 0`,,,,,,,,,,,,,,,,,0
+,,2,已知 `f ( x ) = frac(1)(sqrt(x))` 和 `g ( x ) = 2 x + 3`，求 `( f @ g ) ( x )`之定義域,4,​,2, `x ge - frac(3)(2)`,`x gt 0`,`x le - frac(2)(3)`, `x gt - frac(3)(2)` ,,,,,,,,,,,,,,,,,0
+,,2,".若`f ( x ) = { {:[x^(3) + 1 , quad x le 0], [2 + x , quad 0 lt x lt 2], [3 , quad x ge 2]:}`，則 `f ( f ( 0 ) ) + f ( f ( 2 ) )`=?",3,​,3,2,4,6,8,,,,,,,,,,,,,,,,,0
+,,2,.已知`f ( x ) = frac(x)(1 - x)` ，則`f ( f ( x ) )`為,3,​,3,`frac(1 - x)(x + 1)`, `frac(1)(1 - 2 x)` ,`frac(x)(1 - 2 x)`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x ) = frac(2 x - 3)(3 x + 1)` 的值域 ,2,​,1,"`{ y in R ,     y ne - frac(1)(3) }`"," `{ y in R ,     y ne frac(2)(3) }`", `{ y in R }`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x ) = frac(2 x - 3)(3 x + 1)` 的定義域,1,分母不可為零，即 `3 x + 1 ne 0`，得 `x ne - frac(1)(3)`,1," `{ x in R ,     x ne - frac(1)(3) }`",`{ x in R }`,"`[ - frac(1)(3) , oo )`",以上皆非,,,,,,,,,,,,,,,,,0
+,,2,​,1,根號內不可為負，故 `x^(2) - x^(3) = x^(2) ( 1 - x ) ge 0`，,1,"`x in ( - oo , 1 ]`","`x in ( - oo , 0 ]` ","`x in ( - oo , - 1 )`"," `[ 0 , 1 ]`",,,,,,,,,,,,,,,,,0
+,,2,已知`f ( frac(1 + x)(1 - x) ) = frac(2 + x)(2 - x)`，則`f ( frac(1)(2) )`為,2,​,2,`frac(7)(5)`, `frac(5)(7)`,`frac(1)(5)`,以上皆非,,,,,,,,,,,,,,,,,0
+,,2,設 x 與  y 均為實數，則`| x - y | = | x | + | y |`成立的充分必要條件是：,2,​,3, `x y ge 0`  , `x y le 0`, `x y gt 0`,`x y lt 0`,,,,,,,,,,,,,,,,,0
+,,2,求`f ( x ) = sqrt(frac(x)(pi - x))` 的定義域為,1,​,3,`0 le x lt pi`, `0 lt x lt pi`,`0 lt x lt pi - 1`,`0 le x le pi`,,,,,,,,,,,,,,,,,0
+,,2,若`f ( x )`=`frac(x^(2))(2)`，`a`為一實數，則`f ( a^(2) + 1 ) = ?`,3,​,1, `frac(a^(2))(2) + 1`,`frac(a^(4) + 1)(2)`,`frac(( a^(2) + 1 )^(2))(2)`,`( frac(a^(2) + 1)(2) )^(2)`,,,,,,,,,,,,,,,,,0
+,,2,已知f`( frac(x^(2) + 3)(x + 1) ) = 2 x^(2) - 3 x + 1`，且`x ne - 1`，則`f ( 2 ) = ?`,1,​,3, `0` , `3` , `6`,`10`,,,,,,,,,,,,,,,,,0
+,,2,已知`f ( x + 1 ) = x^(2) + 3 x + 3` ，則`f ( x )`為,1,​,2, `x^(2) + x + 1` , `x^(2) + x + 3` , `x^(2) - x + 1`  , 以上皆非,,,,,,,,,,,,,,,,,0
