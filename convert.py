@@ -6,9 +6,12 @@ import csv
 
 # === 1. 讀取 Excel 題庫 ===
 excel_path_list = ["1 - 1 Functions 函數.xlsx",
-                   "1 - 2 The Definition of a Limit & the Limit Laws 極限定義及定理.xlsx"]
+                   "1 - 2 The Definition of a Limit & the Limit Laws 極限定義及定理.xlsx",
+                   "1 - 3 Continuity 連續.xlsx",
+                   "2 - 1 The Derivative as a  Function & Differentiation Formulas 代數函數的導函數及其微分公式.xlsx",
+                   "2 - 2 Derivatives of Trigonometric Functions 、The Chain Rule & Implicit Differentiation  三角函數的微分、連鎖律及隱函數微分.xlsx"]
 
-target = excel_path_list[1]
+target = excel_path_list[4]
 
 df = pd.read_excel(target)
 

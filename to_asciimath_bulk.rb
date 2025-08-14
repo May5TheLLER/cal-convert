@@ -18,14 +18,17 @@ def latex2ascii(latex)
 
   return '' if latex.nil? || latex.empty?
   begin
-    # 刪掉純排版的 \left / \right
-    # s = latex.gsub(/\\left|\\right/, '')
 
-    # 解析並輸出 AsciiMath
-
-    #使極限符號能正確顯示
+    # 使極限符號能正確顯示
     latex.gsub!(/\\mathop\{\\lim\s*\}/, '')
     latex.gsub!(/\\limits(\s*_\{[^}]+\})/, '\\lim\1')
+    latex.gsub!(/{\\rm lim}/, '\1') #遇到{\rm lim}直接刪除
+    latex.gsub!(/\{\\rm\s+(.*?)\}/ , '\1') #遇到 {\rm n} 後只保留n
+    latex.gsub!(/\\mathop\{(.*?)\}/, '\1') #遇到 \mathtop{n} 後只保留n
+
+    # 正確轉換Latex的\; \,避免被PluriMath直接轉成分號和逗號
+    latex.gsub!(/\\;/, "\u2004") # 把\;換成three-per-em space
+    latex.gsub!(/\\,/, "\u2009") # 把\,換成thin space
     
     # 調整不支援的符號
     latex.gsub!(/\\textit/, '')
@@ -41,10 +44,15 @@ def latex2ascii(latex)
     ascii = CGI.unescapeHTML(ascii)
     ascii = ascii.gsub(/&#x([\da-fA-F]+);/) { [$1.hex].pack('U') }
 
-    #  換行符號處理
+    #  換行符號處理，使分段定義函數能正確顯示
     ascii.gsub!(/:\[(.*?)\]:/m) do
      body = $1.gsub(/"\s*"/, '],[')
      ":[" + body + "]:"
+    end
+
+    # 替換中括號內的分號為逗號，讓分段定義函數的範圍部分能對齊
+    ascii.gsub!(/\[(.*?)\]/m) do |match|
+      "[" + $1.gsub(/;/, ',') + "]"
     end
 
     # 調整不支援的符號
