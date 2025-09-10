@@ -29,9 +29,15 @@ def latex2ascii(latex)
     # 正確轉換Latex的\; \,避免被PluriMath直接轉成分號和逗號
     latex.gsub!(/\\;/, "\u2004") # 把\;換成three-per-em space
     latex.gsub!(/\\,/, "\u2009") # 把\,換成thin space
+    latex.gsub!(/\{\\kern\s*1pt\}/, "\u2009")
     
     # 調整不支援的符號
     latex.gsub!(/\\textit/, '')
+    latex.gsub!(/\\textstyle/, '')
+    latex.gsub!(/\\textrm\{(.*?)\}/, '\1')
+    latex.gsub!(/\\hphantom\{\\cdot\}/, '')
+
+
 
     ast   = Plurimath::Math.parse(latex, :latex)
     ascii = ast.to_asciimath
@@ -74,7 +80,7 @@ def latex2ascii(latex)
     ascii.strip
   rescue => e
 
-    "Failed to parse"
+    "Failed to parse: " + latex
 
   end
 end

@@ -1,29 +1,22 @@
 import pandas as pd
 import ast
 import csv
+from excel_paths import excel_path_list
 
-
-
-# === 1. 讀取 Excel 題庫 ===
-excel_path_list = ["1 - 1 Functions 函數.xlsx",
-                   "1 - 2 The Definition of a Limit & the Limit Laws 極限定義及定理.xlsx",
-                   "1 - 3 Continuity 連續.xlsx",
-                   "2 - 1 The Derivative as a  Function & Differentiation Formulas 代數函數的導函數及其微分公式.xlsx",
-                   "2 - 2 Derivatives of Trigonometric Functions 、The Chain Rule & Implicit Differentiation  三角函數的微分、連鎖律及隱函數微分.xlsx"]
-
-target = excel_path_list[4]
+#讀取 Excel 題庫
+target = excel_path_list[13]
 
 df = pd.read_excel(target)
 
-# === 2. 建立轉換後資料表 ===
+#建立轉換後資料表
 n_rows = len(df) + 2
 converted = pd.DataFrame(index=range(n_rows))
 
-# === 3. 固定欄位 ===
+#固定欄位
 converted["version: 4"] = ["題組", ""] + [""] * len(df)
 converted["Unnamed: 1"] = ["類別", ""] + [""] * len(df)
 
-# === 4. 題型欄位 ===
+#題型欄位
 def map_question_type(t):
     return {"是非題": 1, "單選題": 2, "複選題": 3}.get(t, 2)
 
@@ -31,37 +24,46 @@ converted["Unnamed: 2"] = ["題型:\n(1)是非\n(2)單選\n(3)複選\n(4)填充\
     map_question_type(q) for q in df["類型"]
 ]
 
-# === 5. 包裝 AsciiMath 題幹 ===
+#包裝 AsciiMath 題幹
 def wrap_asciimath(text):
     content = str(text).replace("`", "'")
     return content
 
 converted["Unnamed: 3"] = ["題目", ""] + [wrap_asciimath(q) for q in df["題目"]]
 
-# === 6. 正確答案轉換 ===
+#正確答案轉換
 def map_answer(ans):
-    ans = str(ans).strip()
-    if ans.lower() == "true":
-        return 1
-    elif ans.lower() == "false":
-        return 2
-    elif ans in "ABCDEFGHIJ":
-        return "ABCDEFGHIJ".index(ans) + 1
-    else:
+    try:
+        # 嘗試轉為 list（處理多選題答案樣式如 ["A", "C"]）
+        if isinstance(ans, str) and ans.startswith("["):
+            parsed = ast.literal_eval(ans)
+            if isinstance(parsed, list):
+                return ",".join(str("ABCDEFGHIJ".index(x) + 1) for x in parsed if x in "ABCDEFGHIJ")
+        # 處理是非題
+        ans = str(ans).strip()
+        if ans.lower() == "true":
+            return 1
+        elif ans.lower() == "false":
+            return 2
+        elif ans in "ABCDEFGHIJ":
+            return "ABCDEFGHIJ".index(ans) + 1
+        else:
+            return ""
+    except:
         return ""
 
 converted["Unnamed: 4"] = ["答案\n若為是非題:\n(1)答案為是\n(2)答案為否", "1"] + [map_answer(a) for a in df["正確答案"]]
 
-# === 7. 題解 ===
+#題解
 converted["Unnamed: 5"] = ["解說\n(說明沒有解說)", "無"] + [x if isinstance(x, str) and x.strip() else "無" for x in df["題解"]]
 
-# === 8. 難易度 ===
+#難易度
 def map_difficulty(level):
     return {"難度一": 1, "難度二": 2, "難度三": 3}.get(level, 2)
 
 converted["Unnamed: 6"] = ["難易度:\n(1)容易\n(2)適中\n(3)困難", "2"] + [map_difficulty(l) for l in df["難度"]]
 
-# === 9. 選項展開（支援最多 20 個）===
+#選項展開（支援最多 20 個）
 max_choices = 20
 choices_data = [[] for _ in range(max_choices)]
 
@@ -83,10 +85,10 @@ for i in range(max_choices):
     header = f"選項{i+1}" if i < 4 else ""
     converted[colname] = [header, ""] + choices_data[i]
 
-# === 10. 分數欄 ===
+#分數欄
 converted["Unnamed: 27"] = ["分數 (僅支援自訂配分)", "0"] + [0] * len(df)
 
-# === 11. 匯出為 CSV（iLearning 可用）===
+#匯出為 CSV（iLearning 可用
 
 converted.to_csv("ilearning_" + target.replace(".xlsx", ".csv") , index=False, encoding="utf-8-sig", lineterminator="\n")
 

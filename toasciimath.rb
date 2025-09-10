@@ -4,7 +4,7 @@ require 'cgi'
 #latex轉換成asciimath的主要邏輯與條整，可將要轉換的latex放在latex_list用於測試
 
 latex_list = [
-  '${\mathop{\lim }\limits_{x\, \to \, c}} \, f(x)=L$'
+  '$\, {\kern 1pt} y=x{\kern 1pt} {\kern 1pt}$'
 ]
 
 
@@ -19,9 +19,13 @@ latex_list.each do |latex|
   latex.gsub!(/\\mathop\{(.*?)\}/, '\1') #遇到 \mathtop{n} 後只保留n
   latex.gsub!(/\\;/, "\u2004") # 把\;換成three-per-em space
   latex.gsub!(/\\,/, "\u2009") # 把\,換成thin space
+  latex.gsub!(/\{\\kern\s*1pt\}/, "\u2009")
 
   # 調整不支援的符號
   latex.gsub!(/\\textit/, '')
+  latex.gsub!(/\\texstyle/, '')
+  latex.gsub!(/\\hphantom\{\\cdot\}/, '')
+  latex.gsub!(/\\textrm\{(.*?)\}/, '\1')
   puts latex
   
   formula = Plurimath::Math.parse(latex, :latex)
@@ -60,8 +64,7 @@ latex_list.each do |latex|
       /𝜔/ => 'omega',
       /, ; ;/ => '|',
       /rm\(([^)]*)\)/ => '\1', #遇到 rm(n) 後只保留n
-      #/\{\\rm\s+(.*?)\}/ => '\1' #遇到 {\rm n} 後只保留n
-      #/;/ => '" "'
+      /"P{intx}"/ => 'int x',
     }
 
     replacements.each do |pattern, replacement|
