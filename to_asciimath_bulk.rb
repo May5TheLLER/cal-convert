@@ -21,10 +21,14 @@ def latex2ascii(latex)
 
     # 使極限符號能正確顯示
     latex.gsub!(/\\mathop\{\\lim\s*\}/, '')
+    latex.gsub!(/\\sum\s+\\limits/, '\\sum')#遇到\sum \limits保留sum刪除
+    latex.gsub!(/\\sum\s*\\limits/, '\\sum')#遇到\sum\limits保留sum刪除
     latex.gsub!(/\\limits(\s*_\{[^}]+\})/, '\\lim\1')
     latex.gsub!(/{\\rm lim}/, '\1') #遇到{\rm lim}直接刪除
     latex.gsub!(/\{\\rm\s+(.*?)\}/ , '\1') #遇到 {\rm n} 後只保留n
     latex.gsub!(/\\mathop\{(.*?)\}/, '\1') #遇到 \mathtop{n} 後只保留n
+
+
 
     # 正確轉換Latex的\; \,避免被PluriMath直接轉成分號和逗號
     latex.gsub!(/\\;/, "\u2004") # 把\;換成three-per-em space
@@ -36,6 +40,12 @@ def latex2ascii(latex)
     latex.gsub!(/\\textstyle/, '')
     latex.gsub!(/\\textrm\{(.*?)\}/, '\1')
     latex.gsub!(/\\hphantom\{\\cdot\}/, '')
+    latex.gsub!(/\\overrightarrow/, '\\vec')
+    latex.gsub!(/!\\!\\!\\!\\int\\nolimits/, 'int')
+    latex.gsub!(/\\underline\{(.*?)\}/, '?')
+    latex.gsub!(/\\!\\!\\!\\!/, '')
+    
+    
 
 
 
@@ -71,7 +81,8 @@ def latex2ascii(latex)
       /"P{underline}"/     => '_',
       /𝜔/                  => 'omega',
       /, ; ;/              => '|',
-      /rm\(([^)]*)\)/      => '\1'
+      /rm\(([^)]*)\)/      => '\1',
+      /"P{intx}"/ => 'int x'
     }
     replacements.each { |pattern, replacement| ascii.gsub!(pattern, replacement) }
     
@@ -96,7 +107,7 @@ CSV.open(OUTPUT_CSV, "w",
          encoding: "bom|utf-8",
          write_headers: true,
          headers: CSV.read(INPUT_CSV, encoding: "bom|utf-8", headers: true).headers) do |out_csv|
-
+          
   CSV.foreach(INPUT_CSV, encoding: "bom|utf-8", headers: true) do |row|
     # 4-a. 題目欄
     if row['Unnamed: 3'] && row['Unnamed: 3'].include?('$')
