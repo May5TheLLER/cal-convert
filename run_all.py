@@ -55,9 +55,12 @@ def choose_interactively(files):
     if answer.lower() == "all":
         return files
     try:
-        return [files[int(x) - 1] for x in answer.split()]
-    except (ValueError, IndexError):
+        picks = [int(x) for x in answer.split()]
+    except ValueError:
         sys.exit("輸入的編號不正確")
+    if not picks or any(not 1 <= i <= len(files) for i in picks):
+        sys.exit(f"輸入的編號不正確（請輸入 1 到 {len(files)}）")
+    return [files[i - 1] for i in picks]
 
 
 def ruby_command():
@@ -78,6 +81,9 @@ def main():
     parser.add_argument("--input", default=os.path.join(HERE, "input"), help="題庫 xlsx 所在的資料夾（預設 input/）")
     parser.add_argument("--output", default=os.path.join(HERE, "output"), help="輸出資料夾（預設 output/）")
     args = parser.parse_args()
+    # 轉成絕對路徑：Ruby 會在 repo 資料夾裡執行，相對路徑會對不上
+    args.input = os.path.abspath(args.input)
+    args.output = os.path.abspath(args.output)
 
     files = list_question_banks(args.input)
     if not files:
