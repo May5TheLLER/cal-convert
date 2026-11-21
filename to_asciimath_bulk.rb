@@ -1,144 +1,33 @@
-
 #!/usr/bin/env ruby
 # file: to_asciimath_bulk.rb
+#
+# 把 convert.py 產出的 iLearning CSV 裡的 LaTeX（$…$）批次轉成 AsciiMath。
+# 轉換規則全部定義在 toasciimath.rb，這裡直接引用，不需要再複製規則過來。
 
 require 'csv'
-require 'plurimath'
-require 'cgi'
+require_relative 'toasciimath'
 
 # 1. 輸入／輸出檔名
+INPUT_CSV  = File.read('current_target.txt').strip
+OUTPUT_CSV = 'ascii_' + INPUT_CSV
 
-target = File.read("current_target.txt").strip
-INPUT_CSV = target
+# 2. 要轉換的欄位：題目、解說、選項 1～20
+COLUMNS = ['Unnamed: 3', 'Unnamed: 5'] + (7..26).map { |i| "Unnamed: #{i}" }
 
-OUTPUT_CSV = 'ascii_' + target
+# 3. 處理 CSV
+headers = CSV.read(INPUT_CSV, encoding: 'bom|utf-8', headers: true).headers
+failed  = 0
 
-# 2. 把一段 LaTeX 轉成純 AsciiMath
-def latex2ascii(latex)
-
-  return '' if latex.nil? || latex.empty?
-  begin
-
-    # 使極限符號能正確顯示
-    latex.gsub!(/\\mathop\{\\lim\s*\}/, '')
-    latex.gsub!(/\\sum\s+\\limits/, '\\sum')#遇到\sum \limits保留sum刪除
-    latex.gsub!(/\\sum\s*\\limits/, '\\sum')#遇到\sum\limits保留sum刪除
-    latex.gsub!(/\\limits(\s*_\{[^}]+\})/, '\\lim\1')
-    latex.gsub!(/{\\rm lim}/, '\1') #遇到{\rm lim}直接刪除
-    latex.gsub!(/\{\\rm\s+(.*?)\}/ , '\1') #遇到 {\rm n} 後只保留n
-    latex.gsub!(/\\mathop\{(.*?)\}/, '\1') #遇到 \mathtop{n} 後只保留n
-
-
-
-    # 正確轉換Latex的\; \,避免被PluriMath直接轉成分號和逗號
-    latex.gsub!(/\\;/, "\u2004") # 把\;換成three-per-em space
-    latex.gsub!(/\\,/, "\u2009") # 把\,換成thin space
-    latex.gsub!(/\{\\kern\s*1pt\}/, "\u2009")
-    
-    # 調整不支援的符號
-    latex.gsub!(/\\textit/, '')
-    latex.gsub!(/\\textstyle/, '')
-    latex.gsub!(/\\textrm\{(.*?)\}/, '\1')
-    latex.gsub!(/\\hphantom\{\\cdot\}/, '')
-    latex.gsub!(/\\overrightarrow/, '\\vec')
-    latex.gsub!(/!\\!\\!\\!\\int\\nolimits/, 'int')
-    latex.gsub!(/\\underline\{(.*?)\}/, '?')
-    latex.gsub!(/\\!\\!\\!\\!/, '')
-    
-    
-
-
-
-    ast   = Plurimath::Math.parse(latex, :latex)
-    ascii = ast.to_asciimath
-
-    # 刪掉純排版的 \left / \right
-    ascii.gsub!(/left/, "")
-    ascii.gsub!(/right/, "")
-
-    # 解除 &gt; &le; 等 HTML entity，還原 Unicode code point
-    ascii = CGI.unescapeHTML(ascii)
-    ascii = ascii.gsub(/&#x([\da-fA-F]+);/) { [$1.hex].pack('U') }
-
-    #  換行符號處理，使分段定義函數能正確顯示
-    ascii.gsub!(/:\[(.*?)\]:/m) do
-     body = $1.gsub(/"\s*"/, '],[')
-     ":[" + body + "]:"
+CSV.open(OUTPUT_CSV, 'w', encoding: 'bom|utf-8', write_headers: true, headers: headers) do |out_csv|
+  CSV.foreach(INPUT_CSV, encoding: 'bom|utf-8', headers: true) do |row|
+    COLUMNS.each do |col|
+      next unless row[col]
+      row[col] = ToAsciiMath.convert_text(row[col])
+      failed += row[col].scan('Failed to parse').size
     end
-
-    # 替換中括號內的分號為逗號，讓分段定義函數的範圍部分能對齊
-    ascii.gsub!(/\[(.*?)\]/m) do |match|
-      "[" + $1.gsub(/;/, ',') + "]"
-    end
-
-    # 調整不支援的符號
-    replacements = {
-      /"P{geqslant}"/      => '>=',
-      /"P{duni}"/          => 'bigcup',
-      /"P{mid}"/           => '|',
-      /"P{smblkcircle}"/   => 'cdot',
-      /"P{Re}"/            => 'R',
-      /"P{underline}"/     => '_',
-      /𝜔/                  => 'omega',
-      /, ; ;/              => '|',
-      /rm\(([^)]*)\)/      => '\1',
-      /"P{intx}"/ => 'int x'
-    }
-    replacements.each { |pattern, replacement| ascii.gsub!(pattern, replacement) }
-    
-
-
-    ascii.strip
-  rescue => e
-
-    "Failed to parse: " + latex
-
-  end
-end
-
-# 3. 包上 ` `
-def wrap_fs(eq)
-  return '' if eq.nil? || eq.empty?
-  %Q{`#{eq}`}
-end
-
-# 4. 處理 CSV
-CSV.open(OUTPUT_CSV, "w",
-         encoding: "bom|utf-8",
-         write_headers: true,
-         headers: CSV.read(INPUT_CSV, encoding: "bom|utf-8", headers: true).headers) do |out_csv|
-          
-  CSV.foreach(INPUT_CSV, encoding: "bom|utf-8", headers: true) do |row|
-    # 4-a. 題目欄
-    if row['Unnamed: 3'] && row['Unnamed: 3'].include?('$')
-      raw = row['Unnamed: 3']
-      # 提取所有 $…$，逐段轉
-      conv1 = raw.gsub(/\$([^$]+)\$/) { |m|
-        wrap_fs( latex2ascii($1) )
-      }
-      row['Unnamed: 3'] = conv1
-    end
-
-    # 4-b. 解說攔
-    if row['Unnamed: 5'] && row['Unnamed: 5'].include?('$')
-      raw = row['Unnamed: 5']
-      # 提取所有 $…$，逐段轉
-      conv2 = raw.gsub(/\$([^$]+)\$/) { |m|
-        wrap_fs( latex2ascii($1) )
-      }
-      row['Unnamed: 5'] = conv2
-    end
-
-    # 4-c. 選項欄 (Unnamed: 7 to Unnamed: 26)
-    (7..26).each do |i|
-      col = "Unnamed: #{i}"
-      next unless row[col] && row[col].include?('$')
-      raw = row[col]
-      row[col] = raw.gsub(/\$([^$]+)\$/) { wrap_fs( latex2ascii($1) ) }
-    end
-
     out_csv << row
   end
 end
 
 puts "轉檔完成，輸出：#{OUTPUT_CSV}"
+puts "有 #{failed} 段 LaTeX 轉換失敗，請搜尋 \"Failed to parse\" 並到 toasciimath.rb 補規則" if failed > 0
