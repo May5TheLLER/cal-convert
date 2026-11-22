@@ -1,35 +1,26 @@
-import pandas as pd
+"""把 Excel 題庫轉成 iLearning 匯入用的 CSV（數學式仍為 LaTeX，下一步由 to_asciimath_bulk.rb 轉成 AsciiMath）
+
+用法：
+    python convert.py <題庫.xlsx> [輸出資料夾]
+通常不需要單獨執行，請用 run_all.py。
+"""
 import ast
-import csv
-from excel_paths import excel_path_list
+import os
+import sys
 
-#讀取 Excel 題庫
-target = excel_path_list[13]
+import pandas as pd
 
-df = pd.read_excel(target)
-
-#建立轉換後資料表
-n_rows = len(df) + 2
-converted = pd.DataFrame(index=range(n_rows))
-
-#固定欄位
-converted["version: 4"] = ["題組", ""] + [""] * len(df)
-converted["Unnamed: 1"] = ["類別", ""] + [""] * len(df)
 
 #題型欄位
 def map_question_type(t):
     return {"是非題": 1, "單選題": 2, "複選題": 3}.get(t, 2)
 
-converted["Unnamed: 2"] = ["題型:\n(1)是非\n(2)單選\n(3)複選\n(4)填充\n(5)問答\n(6)說明", "2"] + [
-    map_question_type(q) for q in df["類型"]
-]
 
 #包裝 AsciiMath 題幹
 def wrap_asciimath(text):
     content = str(text).replace("`", "'")
     return content
 
-converted["Unnamed: 3"] = ["題目", ""] + [wrap_asciimath(q) for q in df["題目"]]
 
 #正確答案轉換
 def map_answer(ans):
@@ -52,65 +43,77 @@ def map_answer(ans):
     except:
         return ""
 
-converted["Unnamed: 4"] = ["答案\n若為是非題:\n(1)答案為是\n(2)答案為否", "1"] + [map_answer(a) for a in df["正確答案"]]
-
-#題解
-converted["Unnamed: 5"] = ["解說\n(說明沒有解說)", "無"] + [x if isinstance(x, str) and x.strip() else "無" for x in df["題解"]]
 
 #難易度
 def map_difficulty(level):
     return {"難度一": 1, "難度二": 2, "難度三": 3}.get(level, 2)
 
-converted["Unnamed: 6"] = ["難易度:\n(1)容易\n(2)適中\n(3)困難", "2"] + [map_difficulty(l) for l in df["難度"]]
 
-#選項展開（支援最多 20 個）
-max_choices = 20
-choices_data = [[] for _ in range(max_choices)]
+def convert(xlsx_path, out_dir="output"):
+    """轉換一份題庫，回傳 (輸出 CSV 路徑, 題數)"""
+    #讀取 Excel 題庫
+    df = pd.read_excel(xlsx_path)
 
-for row in df["選項"]:
-    try:
-        opts = ast.literal_eval(row) if isinstance(row, str) else []
-        for i in range(max_choices):
-            if i < len(opts):
-                txt = wrap_asciimath(opts[i])
-            else:
-                txt = ""
-            choices_data[i].append(txt)
-    except Exception:
-        for i in range(max_choices):
-            choices_data[i].append("")
+    #建立轉換後資料表
+    n_rows = len(df) + 2
+    converted = pd.DataFrame(index=range(n_rows))
 
-for i in range(max_choices):
-    colname = f"Unnamed: {7 + i}"
-    header = f"選項{i+1}" if i < 4 else ""
-    converted[colname] = [header, ""] + choices_data[i]
+    #固定欄位
+    converted["version: 4"] = ["題組", ""] + [""] * len(df)
+    converted["Unnamed: 1"] = ["類別", ""] + [""] * len(df)
 
-#分數欄
-converted["Unnamed: 27"] = ["分數 (僅支援自訂配分)", "0"] + [0] * len(df)
+    #題型欄位
+    converted["Unnamed: 2"] = ["題型:\n(1)是非\n(2)單選\n(3)複選\n(4)填充\n(5)問答\n(6)說明", "2"] + [
+        map_question_type(q) for q in df["類型"]
+    ]
 
-#匯出為 CSV（iLearning 可用
+    #題目
+    converted["Unnamed: 3"] = ["題目", ""] + [wrap_asciimath(q) for q in df["題目"]]
 
-converted.to_csv("ilearning_" + target.replace(".xlsx", ".csv") , index=False, encoding="utf-8-sig", lineterminator="\n")
+    #正確答案
+    converted["Unnamed: 4"] = ["答案\n若為是非題:\n(1)答案為是\n(2)答案為否", "1"] + [map_answer(a) for a in df["正確答案"]]
 
-'''
-# 先清理資料：移除前後空白並 escape 雙引號
-def clean_cell(val):
-    if isinstance(val, str):
-        return val.strip().replace('"', '""')
-    return val
+    #題解
+    converted["Unnamed: 5"] = ["解說\n(說明沒有解說)", "無"] + [x if isinstance(x, str) and x.strip() else "無" for x in df["題解"]]
 
-converted = converted.applymap(clean_cell)
+    #難易度
+    converted["Unnamed: 6"] = ["難易度:\n(1)容易\n(2)適中\n(3)困難", "2"] + [map_difficulty(l) for l in df["難度"]]
 
-# 匯出時強制所有欄位加引號
-converted.to_csv(
-    "converted_ilearning.csv",
-    index=False,
-    encoding="utf-8-sig",
-    quoting=csv.QUOTE_ALL,
-    lineterminator="\n"
-)
-'''
-with open("current_target.txt", "w", encoding="utf-8") as f:
-    f.write("ilearning_" + target.replace(".xlsx", ".csv"))
+    #選項展開（支援最多 20 個）
+    max_choices = 20
+    choices_data = [[] for _ in range(max_choices)]
 
-print(" 題庫已成功轉換並匯出為 " + "ilearning_" + target.replace(".xlsx", ".csv"))
+    for row in df["選項"]:
+        try:
+            opts = ast.literal_eval(row) if isinstance(row, str) else []
+            for i in range(max_choices):
+                if i < len(opts):
+                    txt = wrap_asciimath(opts[i])
+                else:
+                    txt = ""
+                choices_data[i].append(txt)
+        except Exception:
+            for i in range(max_choices):
+                choices_data[i].append("")
+
+    for i in range(max_choices):
+        colname = f"Unnamed: {7 + i}"
+        header = f"選項{i+1}" if i < 4 else ""
+        converted[colname] = [header, ""] + choices_data[i]
+
+    #分數欄
+    converted["Unnamed: 27"] = ["分數 (僅支援自訂配分)", "0"] + [0] * len(df)
+
+    #匯出為 CSV（iLearning 可用）
+    os.makedirs(out_dir, exist_ok=True)
+    name = "ilearning_" + os.path.basename(xlsx_path).replace(".xlsx", ".csv")
+    out_path = os.path.join(out_dir, name)
+    converted.to_csv(out_path, index=False, encoding="utf-8-sig", lineterminator="\n")
+    return out_path, len(df)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        sys.exit("用法：python convert.py <題庫.xlsx> [輸出資料夾]")
+    out_path, n = convert(sys.argv[1], *sys.argv[2:3])
+    print(f"題庫已成功轉換並匯出為 {out_path}（{n} 題）")

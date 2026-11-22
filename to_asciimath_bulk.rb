@@ -7,9 +7,11 @@
 require 'csv'
 require_relative 'toasciimath'
 
-# 1. 輸入／輸出檔名
-INPUT_CSV  = File.read('current_target.txt').strip
-OUTPUT_CSV = 'ascii_' + INPUT_CSV
+# 1. 輸入／輸出檔名：由命令列指定，輸出放在同一個資料夾，檔名前面加上 ascii_
+#    用法：bundle exec ruby to_asciimath_bulk.rb output/ilearning_xxx.csv
+abort '用法：bundle exec ruby to_asciimath_bulk.rb <ilearning_xxx.csv>' if ARGV.empty?
+INPUT_CSV  = ARGV[0]
+OUTPUT_CSV = File.join(File.dirname(INPUT_CSV), 'ascii_' + File.basename(INPUT_CSV))
 
 # 2. 要轉換的欄位：題目、解說、選項 1～20
 COLUMNS = ['Unnamed: 3', 'Unnamed: 5'] + (7..26).map { |i| "Unnamed: #{i}" }
